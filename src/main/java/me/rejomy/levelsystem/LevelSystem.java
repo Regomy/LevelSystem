@@ -39,7 +39,10 @@ public class LevelSystem extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+        /* This is shit realization for stop lagging when connect to database take time.
+            But if plugin cant connect to database, we absolutely looses all functions...
+         */
+        new Thread(() -> {
             setDataBase();
 
             dataManager = new DataManager(dataBase);
@@ -55,7 +58,9 @@ public class LevelSystem extends JavaPlugin {
                 userCleanerUtil.runTask(this, dataBase);
             } else
                 userCleanerUtil = new UserCleanerUtil(this, dataBase);
-        });
+
+            Thread.interrupted();
+        }).start();
     }
 
     void setDataBase() {
