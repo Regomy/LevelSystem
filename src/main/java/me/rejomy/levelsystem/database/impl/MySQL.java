@@ -70,7 +70,6 @@ public class MySQL extends DataBase {
 
             // Check if player data contains in db.
             if (resultSet.next()) {
-                resultSet.beforeFirst();
                 return resultSet;
             }
         } catch (SQLException exception) {
