@@ -1,0 +1,22 @@
+# Select current database type:
+# mysql, sqlite
+database: sqlite
+
+mysql:
+  host: ""
+  basename: ""
+  port: ""
+  username: ""
+  password: ""
+
+purge:
+  # How many days should the player's data not be updated and he should not log in to the network
+  #   to delete him from the database
+  max-none-activity-days: 90
+
+xp-system:
+  # Should we reset player experience level after level up
+  reset: false
+
+  # How much experience we should add for next level
+  step: 1000

@@ -1,0 +1,14 @@
+name: LevelSystem
+version: 1.0
+api-version: 1.13
+
+commands:
+  levelsystem:
+    description: Simple level command.
+    aliases:
+      - level
+      - lvls
+    permission: levelsystem.command
+
+author: Rejomy
+main: me.rejomy.levelsystem.LevelSystem
