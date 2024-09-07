@@ -80,4 +80,14 @@ public class MySQL extends DataBase {
         return null;
     }
 
+    @Override
+    public ResultSet getAll() {
+        try {
+            return executeQuery("SELECT * from users");
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
 }

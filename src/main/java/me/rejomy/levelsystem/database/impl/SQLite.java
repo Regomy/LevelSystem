@@ -68,4 +68,14 @@ public class SQLite extends DataBase {
 
         return null;
     }
+
+    @Override
+    public ResultSet getAll() {
+        try {
+            return executeQuery("SELECT * FROM users");
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
 }

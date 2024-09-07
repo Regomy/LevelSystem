@@ -8,10 +8,16 @@ import me.rejomy.levelsystem.database.impl.SQLite;
 import me.rejomy.levelsystem.expansion.PAPIExpansion;
 import me.rejomy.levelsystem.listener.ConnectionListener;
 import me.rejomy.levelsystem.manager.DataManager;
+import me.rejomy.levelsystem.util.database.UserCleanerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class LevelSystem extends JavaPlugin {
+
+    /**
+     * Uses for purge outdated records
+     */
+    private UserCleanerUtil userCleanerUtil;
 
     private DataManager dataManager;
     private DataBase dataBase;
@@ -28,6 +34,7 @@ public class LevelSystem extends JavaPlugin {
     public void onDisable() {
         dataManager.clear();
         Config.INSTANCE = null;
+        userCleanerUtil.stopTask();
     }
 
     @Override
@@ -43,6 +50,11 @@ public class LevelSystem extends JavaPlugin {
 
             getCommand("levelsystem").setExecutor(new LevelCommand(dataBase, dataManager));
             Bukkit.getPluginManager().registerEvents(new ConnectionListener(dataManager), this);
+
+            if (userCleanerUtil != null) {
+                userCleanerUtil.runTask(this, dataBase);
+            } else
+                userCleanerUtil = new UserCleanerUtil(this, dataBase);
         });
     }
 

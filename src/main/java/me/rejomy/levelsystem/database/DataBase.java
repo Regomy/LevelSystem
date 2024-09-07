@@ -16,6 +16,8 @@ public abstract class DataBase {
 
     public abstract ResultSet get(String name);
 
+    public abstract ResultSet getAll();
+
     protected ResultSet executeQuery(String query) throws SQLException {
         Statement statement = getConnection().createStatement();
         return statement.executeQuery(query);
