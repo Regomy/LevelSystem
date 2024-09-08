@@ -29,7 +29,7 @@ public class LevelTransfer extends Transfer {
             data.setLevel(newValue);
 
             if (shouldWriteToDb)
-                dataBase.add(data.getPlayer().getName(), data.getLevel(), data.getExperience());
+                dataBase.add(data.getPlayerName(), data.getLevel(), data.getExperience());
         }
     }
 

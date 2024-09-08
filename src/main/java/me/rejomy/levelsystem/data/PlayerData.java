@@ -14,8 +14,9 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 public class PlayerData {
 
+    final Player player;
     @NotNull
-    Player player;
+    final String playerName;
 
     /**
      * Current player level.

@@ -1,6 +1,7 @@
 package me.rejomy.levelsystem.listener;
 
 import me.rejomy.levelsystem.manager.DataManager;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,7 +17,10 @@ public class ConnectionListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(PlayerJoinEvent event) {
-        dataManager.add(event.getPlayer());
+        Player player = event.getPlayer();
+
+        dataManager.add(
+                dataManager.create(player, player.getName()));
     }
 
 

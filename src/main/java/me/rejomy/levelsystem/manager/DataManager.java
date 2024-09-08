@@ -37,12 +37,16 @@ public class DataManager {
         return data == null? -1 : data.getExperience();
     }
 
-    public void add(Player player) {
+    public void add(PlayerData data) {
+        DATA.add(data);
+    }
+
+    public PlayerData create(Player player, String playerName) {
         int level = 0;
         int experience = 0;
 
         try {
-            ResultSet resultSet = dataBase.get(player.getName());
+            ResultSet resultSet = dataBase.get(playerName);
 
             if (resultSet != null) {
                 level = resultSet.getInt("level");
@@ -53,7 +57,7 @@ public class DataManager {
             exception.printStackTrace();
         }
 
-        DATA.add(new PlayerData(player, level, experience));
+        return new PlayerData(player, playerName, level, experience);
     }
 
     public void remove(Player player) {

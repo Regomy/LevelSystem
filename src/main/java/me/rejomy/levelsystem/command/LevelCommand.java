@@ -105,12 +105,12 @@ public class LevelCommand implements CommandExecutor {
 
     PlayerData checkPlayer(String playerName) {
         Player player = Bukkit.getPlayer(playerName);
+        PlayerData data;
 
+        // Try load player data from database
         if (player == null) {
-            throw new NullPointerException("Player with name " + playerName + " is not found or offline.");
-        }
-
-        PlayerData data = dataManager.get(player);
+            data = dataManager.create(null, playerName);
+        } else data = dataManager.get(player);
 
         if (data == null) {
             throw new NullPointerException("Player with name " + playerName + " dont has a data in memory.");
