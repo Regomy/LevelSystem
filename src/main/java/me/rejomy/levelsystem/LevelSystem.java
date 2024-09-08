@@ -12,6 +12,8 @@ import me.rejomy.levelsystem.util.database.UserCleanerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class LevelSystem extends JavaPlugin {
 
     /**
@@ -42,7 +44,9 @@ public class LevelSystem extends JavaPlugin {
         /* This is shit realization for stop lagging when connect to database take time.
             But if plugin cant connect to database, we absolutely looses all functions...
          */
-        new Thread(() -> {
+        AtomicInteger taskId = new AtomicInteger(0);
+
+        Thread thread = new Thread(() -> {
             setDataBase();
 
             dataManager = new DataManager(dataBase);
@@ -59,8 +63,24 @@ public class LevelSystem extends JavaPlugin {
             } else
                 userCleanerUtil = new UserCleanerUtil(this, dataBase);
 
+            Bukkit.getScheduler().cancelTask(taskId.get());
+
             Thread.interrupted();
-        }).start();
+        });
+
+        thread.start();
+
+        // If connection to database is large than 15 minutes, we should disable plugin.
+        taskId.set(
+                Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
+                    if (thread.isAlive()) {
+                        thread.interrupt();
+
+                        getLogger().severe("Connection to database is too long, check your connection.");
+                        Bukkit.getPluginManager().disablePlugin(this);
+                    }
+                }, 900 * 20)
+        );
     }
 
     void setDataBase() {
