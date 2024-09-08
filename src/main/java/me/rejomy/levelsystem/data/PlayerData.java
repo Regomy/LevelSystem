@@ -2,12 +2,9 @@ package me.rejomy.levelsystem.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.function.Predicate;
 
 /**
  * Here is container for player data.
