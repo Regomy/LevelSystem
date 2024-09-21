@@ -80,7 +80,7 @@ public class LevelCommand implements CommandExecutor {
                 }
             }
 
-            case "give" -> {
+            case "add" -> {
                 if (isLevelRequest) {
                     newValue = data.getLevel() + value;
                 } else if (isXpRequest) {
@@ -98,7 +98,7 @@ public class LevelCommand implements CommandExecutor {
 
         run(data, isLevelRequest, newValue);
         sender.sendMessage(String.format("We are success changing %s %s from %s to %s",
-                playerName, isLevelRequest? "level" : "xp", newValue, previousValue));
+                playerName, isLevelRequest? "level" : "xp", previousValue, newValue));
 
         return false;
     }
@@ -133,7 +133,7 @@ public class LevelCommand implements CommandExecutor {
         sender.sendMessage("Syntax: /level level add|take|set player level");
         sender.sendMessage("Syntax: /level info player");
         sender.sendMessage("");
-        sender.sendMessage("For example: /level take player 2 0");
+        sender.sendMessage("For example: /level level take player 2");
         sender.sendMessage("");
     }
 }
