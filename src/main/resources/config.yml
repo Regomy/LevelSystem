@@ -1,13 +1,14 @@
 # Select current database type:
 # mysql, sqlite
-database: sqlite
+database:
+  type: sqlite
 
-mysql:
-  host: ""
-  basename: ""
-  port: ""
-  username: ""
-  password: ""
+  mysql:
+    host: ""
+    basename: ""
+    port: ""
+    username: ""
+    password: ""
 
 purge:
   # Should we use this feature

@@ -30,6 +30,6 @@ public abstract class DataBase {
     }
 
     protected void createTable() throws SQLException {
-        executeUpdate("CREATE TABLE IF NOT EXISTS users (name TEXT PRIMARY KEY, level INT, xp INT, time LONG)");
+        executeUpdate("CREATE TABLE IF NOT EXISTS users (name VARCHAR(255) PRIMARY KEY, level INT, xp INT, time LONG)");
     }
 }

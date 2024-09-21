@@ -47,7 +47,11 @@ public class LevelSystem extends JavaPlugin {
         AtomicInteger taskId = new AtomicInteger(0);
 
         Thread thread = new Thread(() -> {
-            setDataBase();
+            /* If we receive error when connect to database and our plugin disabling,
+                we should return for avoid some errors when disabled plugin tried to register listeners.
+             */
+            if (!setDataBase())
+                return;
 
             dataManager = new DataManager(dataBase);
 
@@ -83,17 +87,13 @@ public class LevelSystem extends JavaPlugin {
         );
     }
 
-    void setDataBase() {
+    boolean setDataBase() {
         dataBase = null;
 
         try {
-            switch (getConfig().getString("database").toLowerCase()) {
-                case "sqlite" -> {
-                    dataBase = new SQLite();
-                }
-                case "mysql" -> {
-                    dataBase = new MySQL(getConfig());
-                }
+            switch (getConfig().getString("database.type").toLowerCase()) {
+                case "sqlite" -> dataBase = new SQLite();
+                case "mysql" -> dataBase = new MySQL(getConfig());
             }
 
             if (dataBase == null) {
@@ -104,7 +104,8 @@ public class LevelSystem extends JavaPlugin {
 
                 getLogger().severe("Disabling plugin...");
                 Bukkit.getPluginManager().disablePlugin(this);
-            }
+            } else
+                return true;
         } catch (Exception exception) {
             getLogger().severe("");
             getLogger().severe("Error when working with the database :(");
@@ -114,5 +115,7 @@ public class LevelSystem extends JavaPlugin {
 
             Bukkit.getPluginManager().disablePlugin(this);
         }
+
+        return false;
     }
 }

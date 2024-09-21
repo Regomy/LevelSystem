@@ -33,7 +33,8 @@ public class MySQL extends DataBase {
     @Override
     public void add(String name, int level, int xp) {
         try {
-            executeUpdate("INSERT INTO users VALUES ('" + name + "','" + level + "','" + xp + "', '" + System.currentTimeMillis() + "')");
+            executeUpdate("INSERT INTO users VALUES ('" + name + "','" + level + "','" + xp + "', '" + System.currentTimeMillis() + "') " +
+                    "ON DUPLICATE KEY UPDATE level = VALUES(level), xp = VALUES(xp)");
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
